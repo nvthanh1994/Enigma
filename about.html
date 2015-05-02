@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="./favicon.ico">
+
+    <!-- CSS -->
+    <!-- <link rel="stylesheet" type="text/css" href="lib/bootstrap.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="lib/font-awesome-4.3.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap-paper.css">
+
+    <!-- JS -->
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/angular.js"></script>
+
+    <!-- Controller -->
+    <script type="text/javascript" src='js/script.js'></script>
+
+    <title>About Enigma Simulator</title>
+</head>
+<body style="padding-top: 30px;">
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title text-primary text-center"> BTL : An Toàn và Bảo Mật Thông Tin</h3>
+        </div>
+        <div class="panel-body">
+            <h4>- Tên đề tài:</h4> <h5 class="text-center text-danger">Mã hóa bằng máy Enigma và phá mã.</h5>
+            <h4>- Các thành viên</h4>
+            <ul>
+                <li class="text-info">Nguyễn Văn Thanh (Lập trình)</li>
+                <li class="text-info">Nguyễn Anh Tuấn (Chọn đề tài và tìm hiểu Enigma)</li>
+                <li class="text-info">Nguyễn Minh Tuấn (Tìm hiểu Enigma, viết báo cáo)</li>
+            </ul>
+            <h4>- Công nghệ sử dụng</h4>
+            <ul>
+                <li class="text-info">Encryption : <a href="https://angularjs.org/">AngularJS</a>, <a href="http://getbootstrap.com/">Twitter Bootstrap</a></li>
+                <li class="text-info">Decryption : C++</li>
+            </ul>
+            <h4>- Liên hệ</h4>
+            <ul>
+                <li>nvthanh1994@gmail.com</li>
+            </ul>
+            <h4>- Mã nguồn</h4>
+            <ul>
+                <li class="h5"><i class="fa fa-github"></i> <a href="https://github.com/nvthanh1994/enigma">Enigma</a></li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title text-primary text-center"> Cấu hình máy Enigma </h3>
+        </div>
+        <div class="panel-body">
+            <p>Trong bài tập này, chúng em sử dụng máy <a href="http://cryptomuseum.com/crypto/enigma/m3/index.htm">Enigma M3</a> đã được đơn giản hóa. Máy bao gồm 3 Rotor, một Reflector
+                và một Plugboard (với 6 cặp chữ cái hoán đổi).
+            <hr/>
+            Cấu hình cụ thể :
+            <pre>
+            <ul>
+                <li>Alphabet    : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'</li>
+                <li>Rotor 1     : 'BDFHJLCPRTXVZNYEIWGAKMUSQO'</li>
+                <li>Rotor 2     : 'AJDKSIRUXBLHWTMCQGZNPYFVOE'</li>
+                <li>Rotor 3     : 'EKMFLGDQVZNTOWYHXUSPAIBRCJ'</li>
+                <li>Reflector B : 'YRUHQSLDPXNGOKMIEBFZCWVJAT'</li>
+            </ul>
+            </pre>
+
+            Tham khảo :
+            <ul>
+                <li>Wikipedia : <a href="http://en.wikipedia.org/wiki/Enigma_machine">http://en.wikipedia.org/wiki/Enigma_machine</a></li>
+                <li>Internal Wiring : <a href=" http://www.enigma-replica.com/wiring.html"> http://www.enigma-replica.com/wiring.html</a></li>
+                <li>Working Principle : <a href="http://www.cryptomuseum.com/crypto/enigma/working.htm">http://www.cryptomuseum.com/crypto/enigma/working.htm</a></li>
+            </ul>
+            </p>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

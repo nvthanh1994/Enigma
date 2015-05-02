@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html ng-app='myApp' ng-controller='myCtrl'>
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="./favicon.ico">
+
+    <!-- CSS -->
+    <!-- <link rel="stylesheet" type="text/css" href="lib/bootstrap.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="lib/font-awesome-4.3.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap-paper.css">
+
+    <!-- JS -->
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/angular.js"></script>
+
+    <!-- Controller -->
+    <script type="text/javascript" src='js/script.js'></script>
+    <title>Enigma Simulator</title>
+</head>
+
+<body>
+<h4 class='text-success text-center'> Enigma Simulator
+    <button class='btn btn-info btn-xs' data-toggle="modal" data-target="#myModal"><b><span><i class="fa fa-info-circle"></i></span></b></button>
+</h3>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5 class="modal-title text-primary">Hướng dẫn sử dụng Enigma Machine M3</h5>
+                <hr/>
+            </div>
+            <div class="modal-body">
+                <h6 class=" text-info">1. Nhập vào Plugboard Setting và Rotor Start</h6>
+                <h6 class=" text-info">2. Nhấn Save Config </h6>
+                <h6 class=" text-info">3. Nhập vào Input, chú ý <b>không có khoảng trắng</b></h6>
+                <h6 class=" text-info">4. Encrypted message hiện ở khung Ouput</h6>
+                <h6 class=" text-info">5. Enjoy !</h6>
+            </div>
+            <div class="modal-footer">
+                <hr/>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class='container-fluid table-bordered bg-default'>
+    <div class='row'>
+        <div class='col-md-4'>
+            <form role="form">
+                <div class="form-group">
+                    <h4 class='text-center bg-primary'>Input</h4>
+                    <textarea class="form-control bg-success" style="overflow:auto;resize:none" rows="8" id="input" title='Input area' placeholder='Enter input' ng-model='input'
+                              ng-keyup="Encrypt()"></textarea>
+                </div>
+            </form>
+        </div>
+
+        <div class='col-md-4'>
+            <table>
+                <tbody>
+                <tr>
+                    <h4 class='text-center bg-primary'>Init Machine Config</h4>
+                </tr>
+                <tr>
+                    <h5 class='text-center text-danger bg-info'>Reflector</h5>
+                    <select class='form-control' title="Choose Reflector" disabled="true">
+                        <option value='A'>Reflector A</option>
+                        <option value='B' selected="selected">Reflector B</option>
+                        <option value='C'>Reflector C</option>
+                    </select>
+                </tr>
+                <tr>
+                    <h5 class='text-center text-danger bg-info'>Rotors</h5>
+                </tr>
+                <tr>
+                    <div class="btn-group-vertical center-text col-md-4" align="center" title='Choose start character for Rotor 1'>
+                        <p>Rotor 1</p>
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="Start1=Up(Start1)" ng-disabled="isDisabled"><i class="fa fa-plus"></i></button>
+                        <button type="button" class="btn btn-success btn-sm" disabled><strong>{{Start1}}</strong></button>
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="Start1=Down(Start1)" ng-disabled="isDisabled"><i class="fa fa-minus"></i></button>
+                    </div>
+                    <div class="btn-group-vertical center-text col-md-4" align="center" title='Choose start character for Rotor 2'>
+                        <p>Rotor 2</p>
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="Start2=Up(Start2)" ng-disabled="isDisabled"><i class="fa fa-plus"></i></button>
+                        <button type="button" class="btn btn-success btn-sm" disabled><strong>{{Start2}}</strong></button>
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="Start2=Down(Start2)" ng-disabled="isDisabled"><i class="fa fa-minus"></i></button>
+                    </div>
+                    <div class="btn-group-vertical center-text col-md-4" align="center" title='Choose start character for Rotor 3'>
+                        <p>Rotor 3</p>
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="Start3=Up(Start3)" ng-disabled="isDisabled"><i class="fa fa-plus"></i></button>
+                        <button type="button" class="btn btn-success btn-sm" disabled><strong>{{Start3}}</strong></button>
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="Start3=Down(Start3)" ng-disabled="isDisabled"><i class="fa fa-minus"></i></button>
+                    </div>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class='col-md-4'>
+            <form role="form">
+                <div class="form-group">
+                    <h4 class='text-center bg-primary'>Output</h4>
+                    <textarea class="form-control bg-success" readonly='true' style="resize:none" rows="8" id="output" title='Encrypted message'>{{output}}</textarea>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div align="center" class='row'>
+        <div class='col-md-2'><input type='text' class='form-control' size='2' maxlength='2' ng-model="Plugboard[0]" ng-change="Plugboard[0]=AutoCap(Plugboard[0])" placeholder="Plugboard[1]"
+                                     ng-disabled="isDisabled"></div>
+        <div class='col-md-2'><input type='text' class='form-control' size='2' maxlength='2' ng-model="Plugboard[1]" ng-change="Plugboard[1]=AutoCap(Plugboard[1])" placeholder="Plugboard[2]"
+                                     ng-disabled="isDisabled"></div>
+        <div class='col-md-2'><input type='text' class='form-control' size='2' maxlength='2' ng-model="Plugboard[2]" ng-change="Plugboard[2]=AutoCap(Plugboard[2])" placeholder="Plugboard[3]"
+                                     ng-disabled="isDisabled"></div>
+        <div class='col-md-2'><input type='text' class='form-control' size='2' maxlength='2' ng-model="Plugboard[3]" ng-change="Plugboard[3]=AutoCap(Plugboard[3])" placeholder="Plugboard[4]"
+                                     ng-disabled="isDisabled"></div>
+        <div class='col-md-2'><input type='text' class='form-control' size='2' maxlength='2' ng-model="Plugboard[4]" ng-change="Plugboard[4]=AutoCap(Plugboard[4])" placeholder="Plugboard[5]"
+                                     ng-disabled="isDisabled"></div>
+        <div class='col-md-2'><input type='text' class='form-control' size='2' maxlength='2' ng-model="Plugboard[5]" ng-change="Plugboard[5]=AutoCap(Plugboard[5])" placeholder="Plugboard[6]"
+                                     ng-disabled="isDisabled"></div>
+    </div>
+    <hr>
+    <div align="center">
+        <button type="button" class="btn btn-info" ng-click="disableConfig()">Save Configuration</button>
+        <a href="./index.html">
+            <button type="button" class="btn btn-danger">Reset Enigma</button>
+        </a>
+        <button class="btn btn-primary" ng-click="toggle()">{{showinfo}}</button>
+    </div>
+    <br>
+</div>
+<br>
+
+<div class='container-fluid' ng-show="showInfo">
+    <div class="row">
+        <div class="col-md-6">
+            <h6 class="text-center text-primary"><b>Current Machine Config</b></h6>            
+            <pre style="line-height: 20%;" ng-show="isDisabled">
+                <p>Plugboard  : {{PlugboardIn}}</p>
+                <p class=>             {{PlugboardOut}}</p>   
+                <p class="text-success">Rotor 1    : {{Start[1]}} </p>
+                <p class=>             {{EnglishAlphabet}}  (V->W)</p>
+                <p class=>             {{Rotor1Mapping}}</p>
+                <p class="text-success">Rotor 2    : {{Start[2]}}</p>
+                <p class=>             {{EnglishAlphabet}}  (E->F)</p>
+                <p class=>             {{Rotor2Mapping}}</p>
+                <p class="text-success">Rotor 3    : {{Start[3]}}</p>
+                <p class=>             {{EnglishAlphabet}}  (Q->R)</p>
+                <p class=>             {{Rotor3Mapping}}</p>
+                <p>Reflector  : {{ReflectorIn}}</p>
+                <p class=>           : {{ReflectorOut}}</p>
+                <p class="text-warning">Status     : {{status}}</p>
+            </pre>
+
+        </div>
+
+        <div class="col-md-6" style="line-height: 50%;">
+            <h6 class="text-center text-primary"><b>Steps of Encryption</b></h6>
+            <pre ng-show="isDisabled" style="line-height : 250%">
+                                
+                    (Input)  {{steps[0]}} --Plug-->  {{steps[1]}} --R1--> {{steps[2]}} --R2--> {{steps[3]}} --R3--> {{steps[4]}} --Ref-->|
+                    (Output) {{steps[9]}} <--Plug--  {{steps[8]}} <--R1-- {{steps[7]}} <--R2-- {{steps[6]}} <--R3-- {{steps[5]}} <--Ref--|  
+            </pre>
+        </div>
+    </div>
+</div>
+    <footer align='right' class="footer text-center bg-primary">
+        <h6><a href="./about.html" target="newtarget" class="text-muted text-center"><b>Enigma Simulator | Powered by AngularJS</b></a></h6>
+    </footer>
+
+
+<style>
+    html {
+        position: relative;
+        min-height: 100%;
+    }
+    body {
+        margin-bottom: 40px;
+    }
+    .footer {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        height: 40px;
+    }
+</style>
+
+</body>
+</html>
