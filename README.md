@@ -1,5 +1,5 @@
 # Enigma
-Simple Enigma Simulator (Project IT3120 - Information Security)
+Simple Enigma Simulator (Project IT4010 - Information Security)
 # Run
 ./index.html
 
